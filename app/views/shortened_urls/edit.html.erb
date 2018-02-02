@@ -1,0 +1,6 @@
+<h3>Edit Url</h3>
+<%= form_for @url do |f| %>
+	<label for="shortened_url_original_url"> URL:</label>
+	<%= f.text_area :original_url %>
+	<%= f.submit %>
+<% end %>
