@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shortened_url_id: 1
+  browser_name: MyString
+  operating_system: MyString
+  device_name: MyString
+
+two:
+  shortened_url_id: 1
+  browser_name: MyString
+  operating_system: MyString
+  device_name: MyString

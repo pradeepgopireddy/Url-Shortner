@@ -1,4 +1,6 @@
 class ShortenedUrl < ApplicationRecord
+	require 'browser'
+	has_many :logs
 	belongs_to :user
 	validate :check_long_url, on: :create
 	validates_presence_of :original_url

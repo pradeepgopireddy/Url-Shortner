@@ -1,7 +1,7 @@
 <% if @urls.empty? %>
 	<p>No Shortened urls found.</p>
 <% else %>
-<table>
+<table id="urlTable">
 	<thead>
 		<tr>
 			<th> # </th>
@@ -18,7 +18,7 @@
 			<td><%= index + 1 %></td>
 			<td><%= url.original_url %></td>
 			<td><%= distance_of_time_in_words(Time.now, url.created_at) %></td>
-			<td><%= link_to "localhost:3000/#{url.short_url}",url.short_url, target: "_blank" %></td>
+			<td><%= link_to "localhost:3000/#{url.short_url}",shortened_url_welcome_path(:url_id => url.id), target: "_blank" %></td>
 			<td><%= url.clicks %></td>
 			<td><%= link_to "Edit", edit_shortened_url_path(url.id)%> | <%= link_to "destroy", shortened_url_path(url.id), method: :delete %></td>
 		</tr>
@@ -26,11 +26,19 @@
 	</tbody>
 </table>
 <% end %>
-<%= link_to "Create Short Url", new_shortened_url_path %>
+
+<%#= link_to "Create Short Url", new_shortened_url_path %>
+<h3>Enter Url</h3>
+<%= render 'form' %>
 
 <% data = {} %>
 <% @urls.each do |url| %>
-	<% data[url.created_at] = url.clicks %>
+	<% data[url.created_at.strftime("%B %d %Y %H: %M %p")] = url.clicks %>
 <% end %>
-<%= data %>
+<%#= data %>
 <%= column_chart(data) %>
+<script type="text/javascript">
+	// $(document).ready(function(){
+	// 	$('#urlTable').DataTable();
+	// });
+</script>

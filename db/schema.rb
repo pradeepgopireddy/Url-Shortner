@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180129184542) do
+ActiveRecord::Schema.define(version: 20180308062749) do
+
+  create_table "logs", force: :cascade do |t|
+    t.integer "shortened_url_id"
+    t.string "browser_name"
+    t.string "operating_system"
+    t.string "device_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string "name"

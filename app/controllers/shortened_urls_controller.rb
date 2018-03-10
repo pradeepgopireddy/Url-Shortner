@@ -5,10 +5,12 @@ class ShortenedUrlsController < ApplicationController
 	end
 	def index
 		@urls = current_user.shortened_urls
+		@url = ShortenedUrl.new
 	end
 	
 	def show
 		@url = ShortenedUrl.find_by_short_url(params[:short_url])
+		log_creation(@url)
 		@url.update_attributes(:clicks => @url.clicks + 1)
 		redirect_to @url.original_url
 	end
@@ -16,12 +18,14 @@ class ShortenedUrlsController < ApplicationController
 	def create
 		@url = ShortenedUrl.new(shortened_url_params)
 		@url.user_id = current_user.id
-		binding.pry
+
 		if @url.save
+			
 			redirect_to shortened_urls_path
 		else
 			render action: 'new'
 		end
+		
 	end
 	def edit
 		@url = ShortenedUrl.find(params[:id])
@@ -39,10 +43,16 @@ class ShortenedUrlsController < ApplicationController
 		@url.destroy
 		redirect_to shortened_urls_path, notice: "Successfully destroyed the url"
 	end
-
+	def welcome
+		@url = ShortenedUrl.find_by(:url_id)
+	end
 	
 	private
 	def shortened_url_params
 		params[:shortened_url].permit(:original_url, :clicks, :short_url, :user_id)
+	end
+	def log_creation(url)
+		@log = Log.new(shortened_url_id: url.id, browser_name: browser.name, operating_system: browser.platform.name, device_name: browser.device.name, user_id: current_user.id )
+			@log.save
 	end
 end
