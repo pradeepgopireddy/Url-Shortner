@@ -12,7 +12,7 @@ class ShortenedUrlsController < ApplicationController
 		@url = ShortenedUrl.find_by_short_url(params[:short_url])
 		log_creation(@url)
 		@url.update_attributes(:clicks => @url.clicks + 1)
-		redirect_to @url.original_url
+		redirect_to @url.original_url, target:  "_blank"
 	end
 
 	def create
@@ -44,7 +44,8 @@ class ShortenedUrlsController < ApplicationController
 		redirect_to shortened_urls_path, notice: "Successfully destroyed the url"
 	end
 	def welcome
-		@url = ShortenedUrl.find_by(:url_id)
+
+		@url = ShortenedUrl.find_by(:short_url => params[:short_url])
 	end
 	
 	private

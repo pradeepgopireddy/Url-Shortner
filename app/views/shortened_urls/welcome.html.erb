@@ -1,0 +1,16 @@
+<h3>welcome to Url Shortner</h3>
+
+<h5><%= @url.original_url %></h5>
+<h5><%= @url.short_url %></h5>
+<h5>Your Url will open in <p id="countdown"> 5 </p></h5>
+<script type="text/javascript">
+	
+	var countdownHandle = document.getElementById("countdown");
+	setInterval(function(){
+		countdownHandle.innerHTML = parseInt(countdownHandle.innerHTML) - 1;
+	     if(parseInt(countdownHandle.innerHTML) === 0){
+	     	window.location.href = "/<%=@url.short_url%>"
+	     }
+	}, 1000);
+
+</script>
